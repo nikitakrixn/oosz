@@ -1,0 +1,6 @@
+{% extends "layouts/base.html" %}
+{% block title %}{{ data.title }}{% endblock %}
+{% block main %}
+<h1 class="text-4xl font-bold text-center text-gray-800">Welcome to the {{ data.title }}</h1>
+<p class="text-lg text-center text-gray-600 mt-4">{{ data.message }}</p>
+{% endblock %}

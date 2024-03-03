@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter"
+    />
+    <link rel="stylesheet" href="/public/app.css" />
+    <title>{% block title %}{{ title }}{% endblock %} - Site</title>
+    {% block head %}{% endblock %}
+  </head>
+  <body class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400">
+    {% include "components/header.html" %}
+    <main
+      id="main"
+      class="grow"
+    >
+      {% block main %} {% endblock %}
+    </main>
+  </body>
+</html>
