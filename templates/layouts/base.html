@@ -5,15 +5,15 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter"
     />
-    <link rel="stylesheet" href="/public/app.css" />
-    <title>{% block title %}{{ title }}{% endblock %} - Site</title>
-    {% block head %}{% endblock %}
+    <script src="https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <link rel="stylesheet" href="/public/css/app.css" />
+    <title>{% block title %}{{ title }}{% endblock %} - {{ crate::APP_NAME }}</title>
   </head>
-  <body class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400">
+  <body class="bg-gray-100 w-full min-h-screen font-inter antialiased text-slate-600">
     {% include "components/header.html" %}
     <main
       id="main"
-      class="grow"
     >
       {% block main %} {% endblock %}
     </main>

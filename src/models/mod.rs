@@ -1,2 +1,2 @@
 pub mod page_data;
-mod user;
+pub mod user;

@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "format": "prettier --write --ignore-unknown .",
-    "dev": "pnpm dlx tailwindcss -i styles/tailwind.css -o public/css/app.css --watch",
-    "prod": "pnpm dlx tailwindcss -i styles/tailwind.css -o public/css/app.css --minify"
+    "dev": "pnpm dlx tailwindcss -i tailwind.css -c tailwind.config.js -o ../public/css/app.css --watch",
+    "prod": "pnpm dlx tailwindcss -i tailwind.css -c tailwind.config.js -o ../public/css/app.css --minify"
+  },
+  "dependencies": {
+    "htmx.org": "1.9.10"
   },
   "devDependencies": {
     "prettier": "^3.2.5",

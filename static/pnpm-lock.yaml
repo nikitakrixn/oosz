@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  htmx.org:
+    specifier: 1.9.10
+    version: 1.9.10
+
 devDependencies:
   prettier:
     specifier: ^3.2.5
@@ -430,6 +435,13 @@ packages:
     dependencies:
       function-bind: 1.1.2
     dev: true
+
+  /htmx.org@1.9.10:
+    resolution:
+      {
+        integrity: sha512-UgchasltTCrTuU2DQLom3ohHrBvwr7OqpwyAVJ9VxtNBng4XKkVsqrv0Qr3srqvM9ZNI3f1MmvVQQqK7KW/bTA==,
+      }
+    dev: false
 
   /is-binary-path@2.1.0:
     resolution:

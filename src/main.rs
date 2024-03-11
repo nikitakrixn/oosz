@@ -3,23 +3,24 @@ mod utils;
 mod models;
 
 use std::env;
-use std::sync::Arc;
 use anyhow::Context;
-use axum::{Router, ServiceExt};
-use axum::routing::get;
+use askama::Template;
+use axum::http::Method;
+use axum::{Extension, Router};
+use axum::response::IntoResponse;
+use axum::routing::{get, post};
 use dotenv::dotenv;
-use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
+use sqlx::{Pool, Postgres};
 use tracing::{error, info};
 use tokio::net::TcpListener;
+use tower_http::cors;
+use tower_http::cors::CorsLayer;
 use tower_http::services::ServeDir;
-use crate::controllers::index_controller::index;
+use crate::controllers::*;
 use crate::utils::database;
 
 const IS_DEVELOPMENT: bool = cfg!(debug_assertions);
-
-pub struct AppState {
-    db: Pool<Postgres>,
-}
+pub const APP_NAME: &str = "OOSZ";
 
 fn init_tracing() {
     tracing_subscriber::fmt()
@@ -39,7 +40,7 @@ async fn main() -> anyhow::Result<()> {
     let database_url = env::var("DATABASE_URL")
         .context("DATABASE_URL not found in env file")
         .unwrap();
-    let port = env::var("APP_PORT").unwrap_or_else(|_| "8000".to_string());
+    let port = env::var("PORT").unwrap_or_else(|_| "8000".to_string());
 
     let db_pool = match database::create_pool(database_url).await {
         Ok(pool) => {
@@ -52,16 +53,14 @@ async fn main() -> anyhow::Result<()> {
         }
     };
 
-    let app_state = Arc::new(AppState {
-        db: db_pool.clone()
-    });
-
     info!("Initializing router...");
 
     let routes_all = Router::new()
         .nest_service("/public", ServeDir::new("public"))
-        .route("/", get(index))
-        .with_state(app_state);
+        .route("/", get(index_controller::index))
+        .nest("/auth", user_controller::get_router())
+        .layer(Extension(db_pool))
+        .fallback(index_controller::handler_404);
 
     let host_address = IS_DEVELOPMENT.then_some("localhost").unwrap_or("0.0.0.0");
 
@@ -78,3 +77,4 @@ async fn main() -> anyhow::Result<()> {
 
     Ok(())
 }
+
