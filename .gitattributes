@@ -1,3 +1,4 @@
-assets/** linguist-vendored
+public/** linguist-vendored
 templates/** linguist-vendored
 static/** linguist-vendored
+migrations/** linguist-vendored
